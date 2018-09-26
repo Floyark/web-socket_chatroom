@@ -26,5 +26,10 @@ public class ChatRoomSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         log.info("sessionId = {} said: {} ", session.getId(), message);
+        String payload = message.getPayload();
+        if (!payload.isEmpty() && payload.toLowerCase().startsWith("i am ")) {
+            String name = payload.substring(payload.lastIndexOf(" ") + 1);
+            session.sendMessage(new TextMessage("Welcome " + name));
+        }
     }
 }

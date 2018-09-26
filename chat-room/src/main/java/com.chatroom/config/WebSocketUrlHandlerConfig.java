@@ -18,7 +18,7 @@ public class WebSocketUrlHandlerConfig implements WebSocketConfigurer {
     }
 
     @Bean
-    private WebSocketHandler chatRoomHandler() {
+    WebSocketHandler chatRoomHandler() {
         return new ChatRoomSocketHandler();
     }
 }
