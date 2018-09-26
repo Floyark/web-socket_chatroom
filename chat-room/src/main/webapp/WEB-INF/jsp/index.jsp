@@ -3,12 +3,16 @@
    <head>
       <meta charset="UTF-8" />
       <title>Welcome</title>
+      <script>
+        var wsClient = new WebSocket("ws://localhost:8080/chatroom");
+         wsClient.send("Here's some text that the server is urgently awaiting!");
+      </script>
    </head>
    <body>
-      <h1>Welcome</h1>
       <h2>${message}</h2>
-      <a href="${pageContext.request.contextPath}/personList">Person List</a>
-
+      <ul>
+        <li><a>聊天室一</a></li>
+      </ul>
    </body>
 
 </html>
