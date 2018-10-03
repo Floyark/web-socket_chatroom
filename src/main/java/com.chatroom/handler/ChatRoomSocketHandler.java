@@ -1,15 +1,17 @@
 package com.chatroom.handler;
 
-import io.netty.util.internal.ConcurrentSet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.util.HashSet;
+
+
 @Slf4j
 public class ChatRoomSocketHandler extends TextWebSocketHandler {
-    private ConcurrentSet<WebSocketSession> userSessions = new ConcurrentSet();
+    private HashSet<WebSocketSession> userSessions = new HashSet<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
