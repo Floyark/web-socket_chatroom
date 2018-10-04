@@ -4,7 +4,7 @@ MAINTAINER htg huangtg332052@163.com
 
 RUN mkdir -p /apps/
 WORKDIR /apps/
-COPY ./target/chat-room.war /apps/
+COPY  /var/jenkins_home/workspace/websocket-chatroom/target/chat-room.war /apps/
 
 EXPOSE 8080
 

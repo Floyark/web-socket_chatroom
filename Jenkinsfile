@@ -12,6 +12,7 @@ pipeline {
             }
         }
         stage('Deliver') {
+            agent none
             steps {
                 sh 'docker build -t chat-room:latest .'
                 sh '''
