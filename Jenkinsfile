@@ -15,8 +15,8 @@ pipeline {
         stage('Deliver') {
             agent none
             steps {
-                sh 'chmod 755 ./deploy/deploy.sh'
-                sh './deploy/deploy.sh'
+                sh 'docker build -t chat-room:latest .'
+                sh 'docker run --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest'
             }
             post {
                 success  {
