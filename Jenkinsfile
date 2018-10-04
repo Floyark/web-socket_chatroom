@@ -33,7 +33,8 @@ pipeline {
                     fi
                 '''
                 sh 'pwd'
-                sh 'docker build -t chat-room:latest $(pwd)'
+                sh 'ls $(pwd)'
+                sh 'docker build -t chat-room:latest .'
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
