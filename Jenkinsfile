@@ -1,17 +1,18 @@
 pipeline {
-    agent none
+    agent any
     stages {
-        agent {
-             docker {
-                  image 'maven:3.5.2-jdk-8'
-                  args '-v /root/.m2:/root/.m2'
-              }
-        }
         stage('Build') {
+            agent {
+                 docker {
+                      image 'maven:3.5.2-jdk-8'
+                      args '-v /root/.m2:/root/.m2'
+                  }
+            }
             steps {
                 sh 'mvn clean package'
             }
         }
+
         stage('Deliver') {
             agent {
                 node {
