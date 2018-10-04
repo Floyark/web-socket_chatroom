@@ -17,7 +17,8 @@ pipeline {
             steps {
                 sh 'docker build -t chat-room:latest .'
                 sh '[ $(docker ps -a | grep chat-room | awk \'{print $1}\') ] && docker kill $(docker ps -a | grep chat-room | awk \'{print $1}\')'
-                sh 'docker run -dit --restart unless-stopped --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
+                sh 'sleep 2'
+                sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
             }
             post {
                 success  {
