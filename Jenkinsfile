@@ -14,12 +14,6 @@ pipeline {
         }
 
         stage('Deliver') {
-            agent {
-                node {
-                    label 'delivery'
-                    customWorkspace '/var/jenkins_home/workspace/websocket-chatroom'
-                }
-            }
             steps {
                 sh 'docker build -t chat-room:latest .'
                 sh '''
