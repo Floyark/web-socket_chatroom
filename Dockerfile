@@ -3,11 +3,12 @@ FROM java:8
 
 MAINTAINER htg huangtg332052@163.com
 
-cmd_line="java -Dspring.profiles.active=$SPRING_PROFILE -jar chat-room.war > /var/log/chat-room.log"
+ENV profile $SPRING_PROFILE
+
 RUN mkdir -p /apps/
 WORKDIR /apps/
 COPY  ./target/chat-room.war /apps/
 
 EXPOSE 8080
 
-CMD ["/bin/sh","-c","$cmd_line"]
+CMD ["/bin/sh","-c","java","-Dspring.profiles.active=$profiles","-jar","chat-room.war > /var/log/chat-room.log"]
