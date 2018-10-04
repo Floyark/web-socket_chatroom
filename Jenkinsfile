@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    options {
-        retry(3)
-    }
     stages {
         stage('Build') {
             agent {
@@ -39,6 +36,9 @@ pipeline {
                     fi
                     echo '启动工程成功!'
                 '''
+                options {
+                        retry(3)
+                    }
             }
             post {
                 success  {
