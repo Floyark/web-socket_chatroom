@@ -20,11 +20,10 @@ pipeline {
             steps {
                 sh 'mvn spring-boot:run'
             }
-        }
-
-        post {
-            success  {
-                echo '构建成功!'
+            post {
+                success  {
+                    echo '构建成功!'
+                }
             }
         }
     }
