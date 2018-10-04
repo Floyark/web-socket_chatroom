@@ -9,7 +9,7 @@ pipeline {
                  docker {
                       image 'maven:3.5.2-jdk-8'
                       args '-v /root/.m2:/root/.m2'
-                  }
+                  }；
             }
             steps {
                 sh 'mvn clean package'
@@ -32,7 +32,7 @@ pipeline {
                         docker rmi $IMAGE_ID
                     fi
                 '''
-                sh 'docker build -t chat-room:latest  /var/jenkins_home/workspace/websocket-chatroom@2'
+                sh 'docker build --build-arg profile=qa -t chat-room:latest  /var/jenkins_home/workspace/websocket-chatroom@2'
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
