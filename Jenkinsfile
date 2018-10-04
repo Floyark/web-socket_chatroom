@@ -1,18 +1,24 @@
 pipeline {
-    agent {
-          docker {
-              image 'maven:3.5.2-jdk-8'
-              args '-v /root/.m2:/root/.m2'
-          }
-    }
+    agent none
     stages {
+        agent {
+             docker {
+                  image 'maven:3.5.2-jdk-8'
+                  args '-v /root/.m2:/root/.m2'
+              }
+        }
         stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
         stage('Deliver') {
-            agent none
+            agent {
+                node {
+                    label 'delivery'
+                    customWorkspace '/var/jenkins_home/workspace/websocket-chatroom'
+                }
+            }
             steps {
                 sh 'docker build -t chat-room:latest .'
                 sh '''
