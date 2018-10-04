@@ -2,6 +2,7 @@ node {
     docker.image('maven:3.5.2-jdk-8').inside {
         try {
             stage ('Build') {
+                checkout SCM
                 sh 'mvn clean package'
             }
 
