@@ -14,7 +14,7 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh 'chmod 755 ./deploy/deploy.sh'
-                sh 'sudo ./deploy/deploy.sh'
+                sh './deploy/deploy.sh'
             }
             post {
                 success  {
