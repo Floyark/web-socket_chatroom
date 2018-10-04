@@ -31,18 +31,19 @@ pipeline {
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
                         docker start $CONTAINER_ID
-                    else
-                        echo '启动工程失败，需要手动！'
+                        [ $?>0 ] && echo '启动工程失败，需要手动！'
                     fi
-                    echo '启动工程成功!'
                 '''
-                options {
-                        retry(3)
-                    }
             }
             post {
                 success  {
                     echo '构建成功!'
+                }
+                failure {
+                    options {
+                        retry(3)
+                    }
+                    echo '工程构建失败！'
                 }
             }
         }
