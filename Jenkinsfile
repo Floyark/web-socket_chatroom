@@ -17,10 +17,10 @@ pipeline {
             steps {
                 sh 'docker build -t chat-room:latest .'
                 sh 'CHATROOMID=$(docker ps | grep chat-room | awk \'{print $1}\')'
-                sh '[ $CHATROOMID ] && docker stop $CHATROOMID'
+                sh '[ "$CHATROOMID" ] && docker stop $CHATROOMID'
                 sh 'sleep 1'
                 sh 'CHATROOMID=$(docker ps -a | grep chat-room | awk \'{print $1}\')'
-                sh '[ $CHATROOMID ] && docker rm $CHATROOMID'
+                sh '[ "$CHATROOMID" ] && docker rm $CHATROOMID'
                 sh 'sleep 1'
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
             }
