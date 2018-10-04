@@ -14,10 +14,10 @@
    </body>
 <script>
         var chatRecord = document.getElementById('record');
-        var wsClient = new WebSocket("ws://localhost:8080/chatroom");
+        var wsClient = new WebSocket("ws://localhost:8001/chatroom");
          wsClient.onopen = function(event){
             wsClient.send("I am htg.")
-            write("Me: "+"I am coming.")
+            write("Me: "+"I am htg.")
          }
 
          wsClient.onmessage = function(event){
