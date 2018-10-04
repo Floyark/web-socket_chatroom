@@ -1,19 +1,30 @@
-node {
-    docker.image('maven:3.5.2-jdk-8').inside {
-        try {
-            stage ('Build') {
-                sh ' mvn clean package'
+pipeline {
+    agent {
+        docker {
+            image 'maven:3.5.2-jdk-8'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
             }
-
-            stage ('Deploy to Pub') {
-                def MAVEN_OPTS = 'MAVEN_OPTS=-Dspring.profiles.active=qa'
-                withEnv([MAVEN_OPTS]) {
-                    sh 'mvn spring-boot:run'
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
-            echo 'Run Success!'
-        }catch (e){
-            echo 'error!'
+        }
+        stage('Deliver') {
+            steps {
+                sh 'mvn spring-boot:run'
+            }
         }
     }
 }
