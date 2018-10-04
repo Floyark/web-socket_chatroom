@@ -34,6 +34,7 @@ pipeline {
                     else
                         echo '启动工程失败，需要手动！'
                     fi
+                    echo '启动工程成功!'
                 '''
             }
             post {
