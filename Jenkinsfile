@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        retry(3)
+    }
     stages {
         stage('Build') {
             agent {
@@ -25,6 +28,10 @@ pipeline {
                     if [ "$CONTAINER_ID" ];then
                         docker rm $CONTAINER_ID
                     fi
+                    IMAGE_ID=$(docker images | grep chat-room | awk '{print $3}')
+                    if [ "$IMAGE_ID" ];then
+                        docker rmi $IMAGE_ID
+                    fi
                 '''
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
                 sh '''
@@ -34,9 +41,6 @@ pipeline {
                         [ $?>0 ] && echo '启动工程失败，需要手动！'
                     fi
                 '''
-            }
-            options {
-                retry(3)
             }
             post {
                 success  {
