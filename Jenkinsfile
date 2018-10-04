@@ -15,15 +15,16 @@ pipeline {
             steps {
                 sh 'mvn test'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
         }
         stage('Deliver') {
             steps {
                 sh 'mvn spring-boot:run'
+            }
+        }
+
+        post {
+            success  {
+                echo '构建成功!'
             }
         }
     }
