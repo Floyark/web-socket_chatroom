@@ -11,4 +11,4 @@ COPY  ./target/chat-room.war /apps/
 
 EXPOSE 8080
 
-CMD ["/bin/sh","-c","java","-Dspring.profiles.active=$profiles","-jar","chat-room.war > /var/log/chat-room.log"]
+CMD ["/bin/sh","-c","java","-Dspring.profiles.active=$profile","-jar","chat-room.war > /var/log/chat-room.log"]
