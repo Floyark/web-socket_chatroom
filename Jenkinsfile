@@ -33,9 +33,7 @@ pipeline {
                         docker rmi $IMAGE_ID
                     fi
                 '''
-                sh 'pwd'
-                sh 'ls $(pwd)'
-                sh 'docker build -t chat-room:latest .'
+                sh 'docker build -t chat-room:latest  /var/jenkins_home/workspace/websocket-chatroom@2'
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
