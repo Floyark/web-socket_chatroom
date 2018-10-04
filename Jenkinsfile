@@ -12,7 +12,6 @@ node {
             }
         }
         echo 'Run Success!'
-    }
     }catch (e){
         echo 'error!'
     }
