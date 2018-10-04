@@ -1,4 +1,4 @@
-FROM airdock/oracle-jdk:latest
+FROM java:8
 
 MAINTAINER htg huangtg332052@163.com
 
