@@ -19,10 +19,11 @@
             wsClient.send("I am htg.")
             write("Me: "+"I am htg.")
          }
-
          wsClient.onmessage = function(event){
+
             write("receive:"+event.data)
          }
+
          wsClient.onclose = function(event){
            write("error:"+event)
          }
