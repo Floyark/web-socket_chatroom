@@ -1,14 +1,13 @@
-ARG profiles=qa
+ARG SPRING_PROFILE=qa
 FROM java:8
 
 MAINTAINER htg huangtg332052@163.com
 
-ARG profile
-
+cmd_line="java -Dspring.profiles.active=$SPRING_PROFILE -jar chat-room.war > /var/log/chat-room.log"
 RUN mkdir -p /apps/
 WORKDIR /apps/
 COPY  ./target/chat-room.war /apps/
 
 EXPOSE 8080
 
-CMD java -Dspring.profiles.active=$profiles -jar chat-room.war > /var/log/chat-room.log
+CMD ["/bin/sh","-c","$cmd_line"]
