@@ -1,6 +1,7 @@
 pipeline {
     agent any
     options {
+        skipDefaultCheckout true
         retry(3)
     }
     stages {
@@ -8,7 +9,7 @@ pipeline {
             agent {
                  docker {
                       image 'maven:3.5.2-jdk-8'
-                      args '-v /root/.m2:/root/.m2 -w /var/jenkins_home/workspace/websocket-chatroom'
+                      args '-v /root/.m2:/root/.m2'
                   }
             }
             steps {
