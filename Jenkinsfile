@@ -34,6 +34,7 @@ pipeline {
                 '''
                 sh 'docker build --build-arg profile=qa -t chat-room:latest  /var/jenkins_home/workspace/websocket-chatroom@2'
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
+                sleep 2
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
