@@ -16,8 +16,16 @@ pipeline {
             agent none
             steps {
                 sh 'docker build -t chat-room:latest .'
-                sh '[ "$(docker ps | grep chat-room | awk '{print $1}')" ] && docker stop $(docker ps | grep chat-room | awk \'{print $1}\')'
-                sh '[ "$(docker ps -a | grep chat-room | awk '{print $1}')" ] && docker rm $(docker ps | grep chat-room | awk \'{print $1}\')'
+                sh '''
+                    DOCKER_ID=$(docker ps | grep chat-room | awk '{print $1}')
+                    if [ "$DOCKER_ID" ];then
+                        docker stop $DOCKER_ID
+                    fi
+                    DOCKER_ID=$(docker ps -a | grep chat-room | awk '{print $1}')
+                    if [ "$DOCKER_ID" ];then
+                        docker stop $DOCKER_ID
+                    fi
+                '''
                 sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
             }
             post {
