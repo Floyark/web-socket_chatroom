@@ -14,7 +14,7 @@
    </body>
 <script>
         var chatRecord = document.getElementById('record');
-        var wsClient = new WebSocket("ws://http://140.143.35.170:8001/chatroom");
+        var wsClient = new WebSocket("ws://140.143.35.170:8001/chatroom");
          wsClient.onopen = function(event){
             wsClient.send("I am htg.")
             write("Me: "+"I am htg.")
