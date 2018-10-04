@@ -8,4 +8,4 @@ COPY ./target/chat-room.war /apps/
 
 EXPOSE 8080
 
-CMD java -jar chat-room.war > /var/log/chat-room.log &
+CMD java -jar chat-room.war > /var/log/chat-room.log
