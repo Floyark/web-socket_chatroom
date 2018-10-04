@@ -1,4 +1,4 @@
-ARG ACTIVE_PROFILE
+ARG ACTIVE_PROFILE=qa
 FROM java:8
 
 MAINTAINER htg huangtg332052@163.com
@@ -9,4 +9,4 @@ COPY  ./target/chat-room.war /apps/
 
 EXPOSE 8080
 
-CMD java -Dspring.profiles.active=$ACTIVE_PROFILE -jar chat-room.war > /var/log/chat-room.log
+CMD ["java","-Dspring.profiles.active=$ACTIVE_PROFILE","-jar chat-room.war > /var/log/chat-room.log"]
