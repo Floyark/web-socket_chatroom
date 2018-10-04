@@ -23,6 +23,7 @@ pipeline {
                     if [ "$CONTAINER_ID" ];then
                         docker stop $CONTAINER_ID
                     fi
+                    sleep 2
                     CONTAINER_ID=$(docker ps -a | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
                         docker rm $CONTAINER_ID
