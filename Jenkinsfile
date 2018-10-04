@@ -16,7 +16,7 @@ pipeline {
             agent none
             steps {
                 sh 'docker build -t chat-room:latest .'
-                sh 'docker run --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest'
+                sh 'docker run -d --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest'
             }
             post {
                 success  {
