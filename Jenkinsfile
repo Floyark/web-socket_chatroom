@@ -35,14 +35,14 @@ pipeline {
                     fi
                 '''
             }
+            options {
+                retry(3)
+            }
             post {
                 success  {
                     echo '构建成功!'
                 }
                 failure {
-                    options {
-                        retry(3)
-                    }
                     echo '工程构建失败！'
                 }
             }
