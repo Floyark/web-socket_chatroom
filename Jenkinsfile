@@ -35,7 +35,7 @@ pipeline {
                     fi
                 '''
                 sh 'docker build -t chat-room:latest  /var/jenkins_home/workspace/websocket-chatroom@2'
-                sh 'docker run -dit --rm --name chat-room -p 8001:8080 -e SPRING_PROFILE=qa -v /var/jenkins_home/logs:/var/log chat-room:latest &'
+                sh 'docker run -dit --rm --name chat-room -p 8001:8080 -e profiles=qa -v /var/jenkins_home/logs:/var/log chat-room:latest &'
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
