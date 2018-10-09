@@ -8,7 +8,7 @@ import java.util.Optional;
 public class WsSessionUtil {
 
     public static Optional<String> getUserName(WebSocketSession session) {
-        final String field = WsConst.USER_NAME;
+        final String field = WsConst.USER_NAME+"=";
         String attr = null;
         Optional<String> query = Optional.ofNullable(session.getUri().getQuery());
         int userNameIndex = query.orElse("").indexOf(field);
