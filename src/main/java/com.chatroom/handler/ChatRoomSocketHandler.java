@@ -11,8 +11,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 
-import static com.chatroom.component.WsHandlerGroup.WsSessionUtil.getUserName;
-
+import static com.chatroom.util.WsSessionUtil.getUserName;
 
 @Slf4j
 @Service
