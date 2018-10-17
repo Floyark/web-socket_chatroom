@@ -7,5 +7,4 @@ WORKDIR /apps/
 COPY  ./target/chat-room.war /apps/
 
 EXPOSE 8080
-
-CMD java -jar chat-room.war > /var/log/chat-room.log
+CMD ["sh","-c","java -Dspring.profiles.active=$profiles -jar chat-room.war > /var/log/chat-room.log"]

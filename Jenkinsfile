@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    options {
+        retry(3)
+    }
     stages {
         stage('Build') {
             agent {
@@ -14,25 +17,25 @@ pipeline {
         }
 
         stage('Deliver') {
-            agent {
-                node {
-                    label 'delivery'
-                    customWorkspace '/var/jenkins_home/workspace/websocket-chatroom'
-                }
-            }
             steps {
-                sh 'docker build -t chat-room:latest .'
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
                         docker stop $CONTAINER_ID
                     fi
+                    sleep 2
                     CONTAINER_ID=$(docker ps -a | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
                         docker rm $CONTAINER_ID
                     fi
+                    sleep 2
+                    IMAGE_ID=$(docker images | grep chat-room | awk '{print $3}')
+                    if [ "$IMAGE_ID" ];then
+                        docker rmi $IMAGE_ID
+                    fi
                 '''
-                sh 'docker run -dit --rm --name chat-room -p 8001:8080 -v /var/jenkins_home/logs:/var/log chat-room:latest &'
+                sh 'docker build -t chat-room:latest  /var/jenkins_home/workspace/websocket-chatroom@2'
+                sh 'docker run -dit --rm --name chat-room -p 8001:8080 -e profiles=qa -v /var/jenkins_home/logs:/var/log chat-room:latest &'
                 sh '''
                     CONTAINER_ID=$(docker ps | grep chat-room | awk '{print $1}')
                     if [ "$CONTAINER_ID" ];then
@@ -40,9 +43,6 @@ pipeline {
                         [ $?>0 ] && echo '启动工程失败，需要手动！'
                     fi
                 '''
-            }
-            options {
-                retry(3)
             }
             post {
                 success  {
